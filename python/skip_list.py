@@ -87,8 +87,8 @@ class SkipList:
 
   def str_rep(self):
     all_levels = []
-    for i in range(self.head.level, -1, -1):
 
+    def func(i, args):
       l = []
       l.append(self.head.value)
       aux = self.head
@@ -100,6 +100,8 @@ class SkipList:
         l.append(self.tail.value)
 
       all_levels.append(l)
+
+    self._common_loop(self.head.level, 0, func, [], False)
 
     return all_levels
 
