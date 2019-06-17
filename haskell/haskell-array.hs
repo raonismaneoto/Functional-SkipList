@@ -41,7 +41,7 @@ create size minVal maxVal = (SkipList [minVal,maxVal] [0,1] size (create (size-1
 
 calculateAndar andar = 2 --funcao probabilistica
 
-calculateReferences _ NIL = [0,1]
+calculateReferences _ NIL = [0,1]   
 calculateReferences new_array (SkipList below_array _  _ _) = [(findIndex x below_array) | x<-new_array]
 
 
@@ -58,6 +58,15 @@ insertSkip val andarMax (SkipList array index andar skiplist)
 
 insert val insert_andar (SkipList array index andar skiplist) = insertSkip val insert_andar (SkipList array index andar skiplist)
 insert _ _ NIL = error "Generic Error"
+
+
+remove::Int->Skip->Skip
+remove _ NIL = NIL
+remove val (SkipList array index andar skiplist) = (SkipList new_array (calculateReferences new_array skiplist_below) andar skiplist_below)
+    where
+        new_array = (filter (/=val) array)
+        skiplist_below = remove val skiplist
+
 
 size NIL = 0
 size (SkipList array index andar skiplist)
