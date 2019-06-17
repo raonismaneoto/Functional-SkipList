@@ -57,3 +57,13 @@ insertSkip val andarMax (SkipList array index andar skiplist)
 
 
 insert val insert_andar (SkipList array index andar skiplist) = insertSkip val insert_andar (SkipList array index andar skiplist)
+insert _ _ NIL = error "Generic Error"
+
+size NIL = 0
+size (SkipList array index andar skiplist)
+    | skiplist == NIL = (length array)
+    | otherwise = size skiplist
+
+
+height NIL = 0
+height (SkipList array index andar skiplist) = 1 + height skiplist
