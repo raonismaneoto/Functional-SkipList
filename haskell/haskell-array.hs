@@ -70,9 +70,11 @@ remove val (SkipList array index andar skiplist) = (SkipList new_array (calculat
 
 size NIL = 0
 size (SkipList array index andar skiplist)
-    | skiplist == NIL = (length array)
+    | skiplist == NIL = ((length array) - 2)
     | otherwise = size skiplist
 
 
 height NIL = 0
-height (SkipList array index andar skiplist) = 1 + height skiplist
+height (SkipList array index andar skiplist)
+        | (length array) > 2 = ((length array) - 2)
+        | otherwise = height skiplist
