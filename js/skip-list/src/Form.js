@@ -20,6 +20,7 @@ const Form = () => {
   const [showModal, setShowModal] = useState(true)
   const [isLoading, setLoading] = useState(false)
   const [maxHeight, setMaxHeight] = useState('')
+  const [bar, setBar] = useState(false)
   const [foo, setFoo] = useState(false)
 
   const handleChange = e => {
@@ -42,14 +43,14 @@ const Form = () => {
 
   const handleInsert = e => {
     if (skipList) {
-      setLoading(true)
+      setBar(true)
       const iValue = parseInt(value)
       setTimeout(() => {
         if (!skipList.contains(iValue)) {
           skipList.insert(iValue)
           setSkipList(skipList)
         }
-        setLoading(false)
+        setBar(false)
       }, 2000)
     }
   }
@@ -116,8 +117,8 @@ const Form = () => {
         }>
         <Fragment>
           <PageBlock>
-            <div className="flex flex-column items-center">
-              <div className="w-50 mb4">
+            <div className="flex items-center">
+              <div className="w-50 mr4">
                 <Input
                   label="Value"
                   placeholder="Insert the value"
@@ -129,11 +130,11 @@ const Form = () => {
                   }
                 />
               </div>
-              <div className="flex items-center w-50 mb5">
+              <div className="flex self-end w-50">
                 <div className="w-50 mr4">
                   <ButtonWithIcon
                     block
-                    isLoading={isLoading}
+                    isLoading={bar}
                     icon={<IconPlusLines />}
                     onClick={handleInsert}>
                     Insert

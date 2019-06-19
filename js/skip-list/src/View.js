@@ -6,12 +6,12 @@ const View = ({ skipList }) => {
   const columns = () => {
     if (skipList) {
       let levels = []
-      const x = skipList.toString()
+      const x = skipList.toList()
       console.log(x)
       for (let i = 1; i <= skipList.getSize(); ++i) {
         const bar = x[skipList.getHeight()][i]
         let foo = []
-        for (let j = skipList.getHeight(); j >= 0; --j) {
+        for (let j = skipList.getHeight() - 1; j >= 0; --j) {
           if (x[j].includes(bar)) {
             foo.push(bar)
           } else {
@@ -29,7 +29,7 @@ const View = ({ skipList }) => {
   const render = () => {
     const c = columns()
     return (
-      <div className="flex">
+      <div className="flex overflow-x-scroll">
         {c.map((foo, index) => {
           let bar = foo.reverse()
           return (

@@ -51,7 +51,7 @@ export default class SkipList {
     let aux = this.head
 
     const func = (acc, node) => {
-      if (node != undefined) {
+      if (node !== undefined) {
         return [...acc, node]
       }
       return acc
@@ -99,10 +99,10 @@ export default class SkipList {
   remove(value) {
     if (this.contains(value)) {
       let path = this.search(value)
-      let toRemove = path[0][1]
+      const toRemove = path[0][1]
 
       const func = (level, args) => {
-        let prev = path[0][level]
+        let prev = args[0][level][0]
         prev.forward[level] = toRemove.forward[level]
       }
 
@@ -111,15 +111,15 @@ export default class SkipList {
     }
   }
 
-  getHeight() {
-    return this.maxLevel
-  }
-
   getSize() {
     return this.size
   }
 
-  toString() {
+  getHeight() {
+    return this.maxLevel
+  }
+
+  toList() {
     let allLevels = []
 
     const func = (level, args) => {
@@ -127,8 +127,8 @@ export default class SkipList {
       curLevel.push(this.head.toString())
       let aux = this.head
       while (
-        aux.forward[level] != undefined &&
-        aux.forward[level] != this.tail
+        aux.forward[level] !== undefined &&
+        aux.forward[level] !== this.tail
       ) {
         aux = aux.forward[level]
         curLevel.push(aux.toString())
