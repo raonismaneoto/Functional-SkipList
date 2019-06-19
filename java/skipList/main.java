@@ -7,6 +7,6 @@ public class main {
         sl.insert(3, 5, 2);
         sl.insert(4, 3, 1);
         sl.insert(1, 7, 3);
-        System.out.println(sl.toArray()[3]);
+        System.out.println(sl.toArray()[4]);
     }
 }

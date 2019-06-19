@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class SkipListNode<T> {
 
 	// a chave do root eh Integer.MIN_VALUE e a do NIL eh Integer.MAX_VALUE
@@ -55,20 +57,13 @@ public class SkipListNode<T> {
 		if (obj instanceof SkipListNode) {
 			resp = this.key == ((SkipListNode<T>) obj).key
 					&& this.height == ((SkipListNode<T>) obj).height
-					&& this.countForwardsNotNull() == ((SkipListNode<T>) obj)
-							.countForwardsNotNull();
+					&& this.countForwardsNotNull() == ((SkipListNode<T>) obj).countForwardsNotNull();
 		}
 		return resp;
 	}
 
 	private int countForwardsNotNull() {
-		int resp = 0;
-		for (int i = 0; i < forward.length; i++) {
-			if (forward[i] != null) {
-				resp++;
-			}
-		}
-		return resp;
+		return Arrays.stream(forward).filter(node -> node != null).toArray(SkipListNode[]::new).length;
 	}
 
 	public SkipListNode<T>[] getForward() {

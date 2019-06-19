@@ -34,7 +34,7 @@ public class SkipListImpl<T> implements SkipList<T> {
 	 * metodo deve conectar apenas o forward[0].
 	 */
 	private void connectRootToNil() {
-		this.root.forward = Arrays.stream(this.root.forward).map(element -> element = NIL).toArray(SkipListNode[]::new);
+		this.root.forward = Arrays.stream(this.root.forward).map(element -> NIL).toArray(SkipListNode[]::new);
 	}
 
 	/**
@@ -77,7 +77,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 		} else {
 
 			if (height > this.height) {
-				// updateReferences(path, path.getHeight()-1, this.height-1);
 				for (int i = this.height; i < height; i++) {
 
 					update[i] = this.root;
