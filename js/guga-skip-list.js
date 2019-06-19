@@ -1,8 +1,9 @@
 const getLevel = () => {
-  let coin, level = 0
+  let coin,
+    level = 0
   do {
     ++level
-    coin = Math.floor(Math.random() * 100) + 1;
+    coin = Math.floor(Math.random() * 100) + 1
   } while (coin <= 50)
   return level
 }
@@ -19,7 +20,7 @@ class Node {
   }
 }
 
-class SkipList {
+export default class SkipList {
   constructor(maxLevel) {
     this.size = 0
     this.maxLevel = maxLevel
@@ -34,7 +35,7 @@ class SkipList {
   }
 
   traversal(level, limit, func, param, asc) {
-    if (asc && level <= limit || !asc && level >= limit) {
+    if ((asc && level <= limit) || (!asc && level >= limit)) {
       func(level, param)
       if (asc) {
         this.traversal(level + 1, limit, func, param, asc)
@@ -50,9 +51,9 @@ class SkipList {
     let aux = this.head
 
     const func = (acc, node) => {
-      if (node != undefined) {
+      if (node !== undefined) {
         return [...acc, node]
-      } 
+      }
       return acc
     }
 
@@ -78,7 +79,7 @@ class SkipList {
     }
     let newNode = new Node(value, level)
     let path = this.search(value)
-    
+
     const func = (level, args) => {
       let prev = path[level][0]
       let next = path[level][1]
@@ -98,7 +99,7 @@ class SkipList {
   remove(value) {
     if (this.contains(value)) {
       let path = this.search(value)
-      let toRemove = path[0][1]
+      const toRemove = path[0][1]
 
       const func = (level, args) => {
         let prev = args[0][level][0]
@@ -109,18 +110,25 @@ class SkipList {
     }
   }
 
-  size() {
+  getSize() {
     return this.size
   }
 
-  toString() {
+  getHeight() {
+    return this.maxLevel
+  }
+
+  toList() {
     let allLevels = []
 
     const func = (level, args) => {
       let curLevel = []
       curLevel.push(this.head.toString())
       let aux = this.head
-      while (aux.forward[level] != undefined && aux.forward[level] != this.tail) {
+      while (
+        aux.forward[level] !== undefined &&
+        aux.forward[level] !== this.tail
+      ) {
         aux = aux.forward[level]
         curLevel.push(aux.toString())
       }
@@ -132,4 +140,3 @@ class SkipList {
     return allLevels
   }
 }
-
