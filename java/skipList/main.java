@@ -1,6 +1,3 @@
-import SkipList;
-import SkipListImpl;
-
 public class main {
     public static void main(String[]args) {
         SkipList sl = new SkipListImpl(3);
