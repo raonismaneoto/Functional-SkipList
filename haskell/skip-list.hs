@@ -47,9 +47,3 @@ insert key skipList =
   where
     height = maxHeight skipList
     forward = insertNode height key (listHead skipList) True []
-
-main = do
-  let skipList = new 5
-  print (insertNode (maxHeight skipList) 5 (listHead skipList) [])
-
-
