@@ -45,13 +45,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return (Math.random() <= PROBABILITY && level < maxHeight) ? randomLevel(level+1) : level;
 	}
 
-	private SkipListNode<T> findAux(int key, int height, SkipListNode<T> aux) {
-		if (aux.getForward(height).getKey() < key) return findAux(key, height, aux.getForward(height));
-		else if (aux.getForward(height).getKey() > key && height > 0) return findAux(key, height-1, aux);
-		else if (aux.getForward(height).getKey() > key) return aux;
-		else return aux.getForward(height); 
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void insert(int key, T newValue, int height) {
@@ -144,7 +137,9 @@ public class SkipListImpl<T> implements SkipList<T> {
 		}
 	}
 
-	public int heightAux(int height) {
+	private int heightAux(int height) {
+		if (height < 0) return 0;
+		
 		if (this.root.getForward(height).getValue() != null) return height+1;
 		else return heightAux(height-1);
 	}
