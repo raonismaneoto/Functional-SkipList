@@ -159,27 +159,12 @@ public class SkipListImpl<T> implements SkipList<T> {
 
 	@Override
 	public int height() {
+		SkipListNode[] slArray = this.toArray();
 
-		int altura = -1;
-		SkipListNode<T> aux = this.root;
-
-		for (int i = 0; i < size(); i++) {
-
-			if (aux.getForward(0).getHeight() - 1 > altura) {
-				altura = aux.getForward(0).getHeight() - 1;
-			}
-
-			aux = aux.getForward(0);
-		}
-
-		return altura+1;
-
-		// SkipListNode[] slArray = this.toArray();
-		
-		// int height = -1;
-		// // max(Comparator.comparing(SkipListNode::getHeight))
-		// int algos = Arrays.stream(slArray).map(node -> node.getHeight()).toArray(Integer[]::new);
-		// return height;
+		return Arrays.stream(slArray)
+		             .filter(node -> (node != this.root && node != NIL))
+					 .map(node -> node.getHeight())
+					 .max((a, b) -> a < b ? a : b).get();
 	}
 
 	public boolean isEmpty() {
@@ -213,8 +198,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return this.size;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
 	public SkipListNode<T>[] toArray() {
 
 		SkipListNode<T>[] array = new SkipListNode[2 + size()];
@@ -224,7 +207,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 		int i = 0;
 
 		while (aux != null) {
-
 			array[i] = aux;
 			i++;
 			aux = aux.getForward(0);
@@ -232,5 +214,4 @@ public class SkipListImpl<T> implements SkipList<T> {
 
 		return array;
 	}
-
 }
