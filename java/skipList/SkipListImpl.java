@@ -61,17 +61,24 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return randomLevel;
 	}
 
+	private SkipListNode<T> findAux(int key, int height, SkipListNode<T> aux) {
+		if (aux.getForward(height).getKey() < key) return findAux(key, height, aux.getForward(height));
+		else if (aux.getForward(height).getKey() > key && height > 0) return findAux(key, height-1, aux);
+		else if (aux.getForward(height).getKey() > key) return aux;
+		else return aux.getForward(height); 
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void insert(int key, T newValue, int height) {
 
 		SkipListNode<T>[] update = new SkipListNode[this.maxHeight];
 		SkipListNode<T> aux = this.root;
+		// for (int i = this.height - 1; i >= 0; i--) update[i] = aux;
 
 		for (int i = this.height - 1; i >= 0; i--) {
 
 			while (aux.getForward(i).getKey() < key) {
-
 				aux = aux.getForward(i);
 			}
 
@@ -82,13 +89,11 @@ public class SkipListImpl<T> implements SkipList<T> {
 		aux = aux.getForward(0);
 
 		if (aux.getKey() == key) {
-
 			aux.setValue(newValue);
-
 		} else {
 
 			if (height > this.height) {
-
+				// updateReferences(path, path.getHeight()-1, this.height-1);
 				for (int i = this.height; i < height; i++) {
 
 					update[i] = this.root;
@@ -161,8 +166,9 @@ public class SkipListImpl<T> implements SkipList<T> {
 		if (this.root.getForward(height).getValue() != null) return height+1;
 		else return heightAux(height-1);
 	}
+
 	@Override
-	public int height() {u
+	public int height() {
 		return heightAux(this.maxHeight-1);
 	}
 
@@ -187,20 +193,15 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return this.size;
 	}
 
+	private SkipListNode<T>[] create(SkipListNode<T>[] array, SkipListNode<T> aux, int idx) {
+		if (idx < size()+2) {
+			array[idx] = aux;
+			return create(array, aux.getForward(0), idx+1);
+		} else return array;
+	}
+
 	public SkipListNode<T>[] toArray() {
-
 		SkipListNode<T>[] array = new SkipListNode[2 + size()];
-
-		SkipListNode<T> aux = this.root;
-
-		int i = 0;
-
-		while (aux != null) {
-			array[i] = aux;
-			i++;
-			aux = aux.getForward(0);
-		}
-
-		return array;
+		return create(array, this.root, 0);
 	}
 }
