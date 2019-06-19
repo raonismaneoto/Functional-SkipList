@@ -157,14 +157,13 @@ public class SkipListImpl<T> implements SkipList<T> {
 		}
 	}
 
+	public int heightAux(int height) {
+		if (this.root.getForward(height).getValue() != null) return height+1;
+		else return heightAux(height-1);
+	}
 	@Override
-	public int height() {
-		SkipListNode[] slArray = this.toArray();
-
-		return Arrays.stream(slArray)
-		             .filter(node -> (node != this.root && node != NIL))
-					 .map(node -> node.getHeight())
-					 .max((a, b) -> a < b ? a : b).get();
+	public int height() {u
+		return heightAux(this.maxHeight-1);
 	}
 
 	public boolean isEmpty() {
@@ -172,8 +171,8 @@ public class SkipListImpl<T> implements SkipList<T> {
 	}
 
 	private SkipListNode<T> searchAux(int key, SkipListNode<T> aux, int height) {
-		if (aux.getForward(height).key == key || height == 0) return aux.getForward(0);
-		else if (aux.getForward(height).key > key) return searchAux(key, aux, height-1);
+		if (aux.getForward(height).getKey() == key || height == 0) return aux.getForward(0);
+		else if (aux.getForward(height).getKey() > key) return searchAux(key, aux, height-1);
 		else return searchAux(key, aux.getForward(height), height);
 	}
 
