@@ -6,6 +6,6 @@ public class main {
         SkipList sl = new SkipListImpl(3);
         sl.insert(3, 5, 2);
         sl.insert(4, 3, 1);
-        System.out.println(sl.height());
+        System.out.println(sl.search(4));
     }
 }

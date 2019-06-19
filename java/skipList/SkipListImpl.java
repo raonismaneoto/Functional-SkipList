@@ -171,26 +171,16 @@ public class SkipListImpl<T> implements SkipList<T> {
 		return this.root.getForward(0).equals(this.NIL);
 	}
 
+	private SkipListNode<T> searchAux(int key, SkipListNode<T> aux, int height) {
+		if (aux.getForward(height).key == key || height == 0) return aux.getForward(0);
+		else if (aux.getForward(height).key > key) return searchAux(key, aux, height-1);
+		else return searchAux(key, aux.getForward(height), height);
+	}
+
 	@Override
 	public SkipListNode<T> search(int key) {
-
-		SkipListNode<T> aux = this.root;
-
-		for (int i = this.height - 1; i >= 0; i--) {
-
-			while (aux.getForward(i).key < key) {
-				aux = aux.getForward(i);
-				System.out.println(aux.height);
-			}
-		}
-		
-		aux = aux.getForward(0);
-
-		if (aux.getKey() == key) {
-			return aux;
-		} else {
-			return null;
-		}
+		SkipListNode<T> aux = searchAux(key, this.root, this.height-1);
+		return aux.getKey() == key ? aux : null;
 	}
 
 	@Override
