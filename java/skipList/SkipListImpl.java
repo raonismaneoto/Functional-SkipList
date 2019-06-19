@@ -34,31 +34,15 @@ public class SkipListImpl<T> implements SkipList<T> {
 	 * metodo deve conectar apenas o forward[0].
 	 */
 	private void connectRootToNil() {
-
-		if (USE_MAX_HEIGHT_AS_HEIGHT) {
-
-			for (int i = 0; i < maxHeight; i++) {
-
-				root.forward[i] = NIL;
-			}
-
-		} else {
-
-			root.forward[0] = NIL;
-		}
+		this.root.forward = Arrays.stream(this.root.forward).map(element -> NIL).toArray(SkipListNode[]::new);
 	}
 
 	/**
 	 * Metodo que gera uma altura aleatoria para ser atribuida a um novo no no
 	 * metodo insert(int,V)
 	 */
-	private int randomLevel() {
-		int randomLevel = 1;
-		double random = Math.random();
-		while (Math.random() <= PROBABILITY && randomLevel < maxHeight) {
-			randomLevel = randomLevel + 1;
-		}
-		return randomLevel;
+	public int randomLevel(int level) {
+		return (Math.random() <= PROBABILITY && level < maxHeight) ? randomLevel(level+1) : level;
 	}
 
 	private SkipListNode<T> findAux(int key, int height, SkipListNode<T> aux) {
@@ -74,7 +58,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 
 		SkipListNode<T>[] update = new SkipListNode[this.maxHeight];
 		SkipListNode<T> aux = this.root;
-		// for (int i = this.height - 1; i >= 0; i--) update[i] = aux;
 
 		for (int i = this.height - 1; i >= 0; i--) {
 
@@ -93,7 +76,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 		} else {
 
 			if (height > this.height) {
-				// updateReferences(path, path.getHeight()-1, this.height-1);
 				for (int i = this.height; i < height; i++) {
 
 					update[i] = this.root;
