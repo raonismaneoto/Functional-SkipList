@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+   
+  </head>
+  <body style="height: 100%;">
+    <script src="skip-list.js"></script>
+    <script src="view.js"></script>
+    <div style="display: grid; grid-template-rows: 13% 13% 13% 13% 13% 13% 13%; grid-row-gap: 10px;">
+      <div>
+        <button onclick="create(document.getElementById('createInput').value)"> 
+          Create Skip List
+        </button>
+        <input type="number" id="createInput" placeholder="SkipList height"/>
+      </div>
+      <div>
+        <button onclick="addToSl(document.getElementById('addToSl').value)"> 
+          Add value
+        </button>
+        <input type="number" id="addToSl" placeholder="Node value"/>
+      </div>
+      <div>
+        <button onclick="search(document.getElementById('searchInput').value)"> 
+          Search value
+        </button>
+        <input type="number" id="searchInput" placeholder="Node value"/>
+      </div>
+      <div>
+        <button onclick="remove(document.getElementById('removeInput').value)"> 
+          Remove value
+        </button>
+        <input type="number" id="removeInput" placeholder="Node value"/>
+      </div>
+
+      <div>
+        <button onclick="height()"> 
+          Check height
+        </button>
+      </div>
+
+      <div>
+        <button onclick="size()"> 
+          Check size
+        </button>
+      </div>
+
+      <div>
+        <button onclick="showSl()">
+          Check skip list
+        </button>
+      </div>
+    </div>
+    </body>
+</html>
