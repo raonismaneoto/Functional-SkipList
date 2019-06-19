@@ -79,7 +79,7 @@ size (SkipList array index andar skiplist)
 
 height NIL = 0
 height (SkipList array index andar skiplist)
-        | (length array) > 2 = ((length array) - 2)
+        | (length array) > 2 = andar
         | otherwise = height skiplist
 
 -- Tests
