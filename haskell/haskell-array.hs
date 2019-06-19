@@ -1,3 +1,6 @@
+import Test.Tasty (defaultMain, testGroup)
+import Test.Tasty.HUnit (assertEqual, testCase)
+
 data Skip = SkipList [Int] [Int] Int Skip | NIL deriving (Eq,Show)
 
 
@@ -21,11 +24,11 @@ checkValue array index expected_val
     | otherwise = error "Value not found"
 
 getSkip::Int->Int->Skip->Int
-getSkip acessPos val (SkipList array index_array andar skiplist) 
+getSkip acessPos val (SkipList array index_array andar skiplist)
     | skiplist /= NIL = getSkip (index_array!!index_before) val skiplist
     | skiplist == NIL = (checkValue array (index_before+1) val)
     | otherwise = error "Generic error"
-    where 
+    where
         index_before = (findLastSmallerIndex val array)
 
 
@@ -41,7 +44,7 @@ create size minVal maxVal = (SkipList [minVal,maxVal] [0,1] size (create (size-1
 
 calculateAndar andar = 2 --funcao probabilistica
 
-calculateReferences _ NIL = [0,1]   
+calculateReferences _ NIL = [0,1]
 calculateReferences new_array (SkipList below_array _  _ _) = [(findIndex x below_array) | x<-new_array]
 
 
@@ -50,7 +53,7 @@ insertSkip val andarMax NIL = NIL
 insertSkip val andarMax (SkipList array index andar skiplist)
     | andar <= andarMax = (SkipList new_array (calculateReferences new_array skiplist_below) andar skiplist_below)
     | otherwise = (SkipList array (calculateReferences array skiplist_below) andar skiplist_below)
-    where 
+    where
         new_array = insertAt (index_before+1) val array
         skiplist_below = insertSkip val andarMax skiplist
         index_before = (findLastSmallerIndex val array)
@@ -78,3 +81,15 @@ height NIL = 0
 height (SkipList array index andar skiplist)
         | (length array) > 2 = ((length array) - 2)
         | otherwise = height skiplist
+
+-- Tests
+
+main = defaultMain unitTests
+
+unitTests = testGroup "Skip List tests" [emptySkipList, sizeAfterInsert, sizeAfterRemove]
+
+emptySkipList = testCase "Empty Skip List right after creation" $ assertEqual [] 0 (size (create 5 0 100))
+
+sizeAfterInsert = testCase "Size increases by one after insert" $ assertEqual [] 1 (size (insertSkip 5 3 (create 5 0 100)))
+
+sizeAfterRemove = testCase "Size decreases by one after remove" $ assertEqual [] 0 (size (remove 5 (insertSkip 5 3 (create 5 0 100))))

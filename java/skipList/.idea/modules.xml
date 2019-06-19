@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/skipList.iml" filepath="$PROJECT_DIR$/.idea/skipList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skipList.iml" filepath="$PROJECT_DIR$/skipList.iml" />
     </modules>
   </component>
 </project>
