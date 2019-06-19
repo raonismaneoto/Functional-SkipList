@@ -86,10 +86,23 @@ height (SkipList array index andar skiplist)
 
 main = defaultMain unitTests
 
-unitTests = testGroup "Skip List tests" [emptySkipList, sizeAfterInsert, sizeAfterRemove]
+unitTests = testGroup "Skip List tests" [
+  emptySkipList,
+  sizeAfterInsert,
+  sizeAfterRemove,
+  searchAfterInsert,
+  heightAfterInsertLowElement
+  ]
 
 emptySkipList = testCase "Empty Skip List right after creation" $ assertEqual [] 0 (size (create 5 0 100))
 
 sizeAfterInsert = testCase "Size increases by one after insert" $ assertEqual [] 1 (size (insertSkip 5 3 (create 5 0 100)))
 
 sizeAfterRemove = testCase "Size decreases by one after remove" $ assertEqual [] 0 (size (remove 5 (insertSkip 5 3 (create 5 0 100))))
+
+searchAfterInsert = testCase "Returns the inserted element after it being inserted" $ assertEqual [] 5 (find 5 (insertSkip 5 3 (create 5 0 100)))
+
+heightAfterInsertLowElement = testCase "Return the same height after insert a low element" $ assertEqual [] (height (insertSkip 5 3 (create 5 0 100))) (height (insertSkip 6 2 (insert 5 3 (create 5 0 100))))
+
+
+
