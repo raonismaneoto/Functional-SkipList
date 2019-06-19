@@ -34,31 +34,15 @@ public class SkipListImpl<T> implements SkipList<T> {
 	 * metodo deve conectar apenas o forward[0].
 	 */
 	private void connectRootToNil() {
-
-		if (USE_MAX_HEIGHT_AS_HEIGHT) {
-
-			for (int i = 0; i < maxHeight; i++) {
-
-				root.forward[i] = NIL;
-			}
-
-		} else {
-
-			root.forward[0] = NIL;
-		}
+		this.root.forward = Arrays.stream(this.root.forward).map(element -> element = NIL).toArray(SkipListNode[]::new);
 	}
 
 	/**
 	 * Metodo que gera uma altura aleatoria para ser atribuida a um novo no no
 	 * metodo insert(int,V)
 	 */
-	private int randomLevel() {
-		int randomLevel = 1;
-		double random = Math.random();
-		while (Math.random() <= PROBABILITY && randomLevel < maxHeight) {
-			randomLevel = randomLevel + 1;
-		}
-		return randomLevel;
+	public int randomLevel(int level) {
+		return (Math.random() <= PROBABILITY && level < maxHeight) ? randomLevel(level+1) : level;
 	}
 
 	private SkipListNode<T> findAux(int key, int height, SkipListNode<T> aux) {

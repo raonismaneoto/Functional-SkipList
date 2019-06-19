@@ -39,4 +39,10 @@ public interface SkipList<T> {
 	 * skip list in order.
 	 */
 	public SkipListNode<T>[] toArray();
+
+	/**
+	 * Metodo que gera uma altura aleatoria para ser atribuida a um novo no no
+	 * metodo insert(int,V)
+	 */
+	public int randomLevel(int level);
 }
