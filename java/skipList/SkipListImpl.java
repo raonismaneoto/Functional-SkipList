@@ -58,7 +58,6 @@ public class SkipListImpl<T> implements SkipList<T> {
 
 		SkipListNode<T>[] update = new SkipListNode[this.maxHeight];
 		SkipListNode<T> aux = this.root;
-		// for (int i = this.height - 1; i >= 0; i--) update[i] = aux;
 
 		for (int i = this.height - 1; i >= 0; i--) {
 
